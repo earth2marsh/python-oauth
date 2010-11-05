@@ -16,6 +16,7 @@ This code was forked from [SimpleGeo's python-oauth2](http://github.com/simplege
     
     # Set the API endpoint 
     url = "http://example.com/photos"
+    PROXY_DOMAIN = "api-example.apigee.com"
     
     # Set the base oauth_* parameters along with any other parameters required
     # for the API call.
@@ -61,6 +62,8 @@ The <code>oauth2.Client</code> is based on <code>httplib2</code> and works just 
     client = oauth.Client(consumer)
     
     # The OAuth Client request works just like httplib2 for the most part.
+    # Optional use with a proxy:
+    # resp, content = client.request(request_token_url, "GET", PROXY_DOMAIN)
     resp, content = client.request(request_token_url, "GET")
     print resp
     print content
@@ -125,6 +128,8 @@ can be easily translated to a web application.
     token.set_verifier(oauth_verifier)
     client = oauth.Client(consumer, token)
     
+    # Optional use of a proxy: 
+    # resp, content = client.request(access_token_url, "POST", PROXY_DOMAIN)
     resp, content = client.request(access_token_url, "POST")
     access_token = dict(urlparse.parse_qsl(content))
     
