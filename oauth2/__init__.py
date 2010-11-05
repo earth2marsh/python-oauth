@@ -537,7 +537,7 @@ class Client(httplib2.Http):
 
         self.method = method
 
-    def request(self, uri, method="GET", body=None, headers=None, 
+    def request(self, uri, method="GET", proxy=None, body=None, headers=None, 
         redirections=httplib2.DEFAULT_MAX_REDIRECTS, connection_type=None):
         DEFAULT_CONTENT_TYPE = 'application/x-www-form-urlencoded'
 
@@ -569,6 +569,9 @@ class Client(httplib2.Http):
             uri = req.to_url()
         else:
             headers.update(req.to_header())
+
+        if proxy:
+            uri = uri.replace(urlparse.urlparse(uri),proxy,1)
 
         return httplib2.Http.request(self, uri, method=method, body=body, 
             headers=headers, redirections=redirections, 
